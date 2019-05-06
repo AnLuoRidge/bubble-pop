@@ -1,4 +1,4 @@
-# BubblePop
+# Bubble Pop
 
 Action Puzzle Game for iOS
 
