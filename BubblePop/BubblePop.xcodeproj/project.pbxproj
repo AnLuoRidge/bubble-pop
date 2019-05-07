@@ -21,6 +21,9 @@
 		D963F53322812780009D7A08 /* BubblePopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963F53222812780009D7A08 /* BubblePopTests.swift */; };
 		D963F53E22812780009D7A08 /* BubblePopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963F53D22812780009D7A08 /* BubblePopUITests.swift */; };
 		D963F54C22812E0B009D7A08 /* BPHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963F54B22812E0B009D7A08 /* BPHomeViewController.swift */; };
+		D963F5532281406F009D7A08 /* BPLeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963F5522281406F009D7A08 /* BPLeaderboardViewController.swift */; };
+		D963F5552281429B009D7A08 /* BPLeaderboardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963F5542281429B009D7A08 /* BPLeaderboardTableViewController.swift */; };
+		D963F55822814461009D7A08 /* BPScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D963F55722814461009D7A08 /* BPScoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +69,9 @@
 		D963F53D22812780009D7A08 /* BubblePopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblePopUITests.swift; sourceTree = "<group>"; };
 		D963F53F22812780009D7A08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D963F54B22812E0B009D7A08 /* BPHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPHomeViewController.swift; sourceTree = "<group>"; };
+		D963F5522281406F009D7A08 /* BPLeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPLeaderboardViewController.swift; sourceTree = "<group>"; };
+		D963F5542281429B009D7A08 /* BPLeaderboardTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPLeaderboardTableViewController.swift; sourceTree = "<group>"; };
+		D963F55722814461009D7A08 /* BPScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BPScoreViewController.swift; sourceTree = "<group>"; };
 		DEBCB44A5487843D0B0DDEB5 /* Pods-BubblePopTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubblePopTests.release.xcconfig"; path = "Target Support Files/Pods-BubblePopTests/Pods-BubblePopTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,12 +138,15 @@
 		D963F5162281277D009D7A08 /* BubblePop */ = {
 			isa = PBXGroup;
 			children = (
+				D963F5562281444A009D7A08 /* ScorePage */,
+				D963F55122813C2E009D7A08 /* LeaderboardPage */,
+				D963F55022813AB2009D7A08 /* GamePage */,
+				D963F54F22813A9D009D7A08 /* SettingsPage */,
 				D963F54E22812E7D009D7A08 /* HomePage */,
 				D963F5172281277E009D7A08 /* AppDelegate.swift */,
 				D963F5192281277E009D7A08 /* GameScene.sks */,
 				D963F51B2281277E009D7A08 /* Actions.sks */,
 				D963F51D2281277E009D7A08 /* GameScene.swift */,
-				D963F51F2281277E009D7A08 /* GameViewController.swift */,
 				D963F5212281277E009D7A08 /* Main.storyboard */,
 				D963F52422812780009D7A08 /* Assets.xcassets */,
 				D963F52622812780009D7A08 /* LaunchScreen.storyboard */,
@@ -170,6 +179,38 @@
 				D963F54B22812E0B009D7A08 /* BPHomeViewController.swift */,
 			);
 			path = HomePage;
+			sourceTree = "<group>";
+		};
+		D963F54F22813A9D009D7A08 /* SettingsPage */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SettingsPage;
+			sourceTree = "<group>";
+		};
+		D963F55022813AB2009D7A08 /* GamePage */ = {
+			isa = PBXGroup;
+			children = (
+				D963F51F2281277E009D7A08 /* GameViewController.swift */,
+			);
+			path = GamePage;
+			sourceTree = "<group>";
+		};
+		D963F55122813C2E009D7A08 /* LeaderboardPage */ = {
+			isa = PBXGroup;
+			children = (
+				D963F5522281406F009D7A08 /* BPLeaderboardViewController.swift */,
+				D963F5542281429B009D7A08 /* BPLeaderboardTableViewController.swift */,
+			);
+			path = LeaderboardPage;
+			sourceTree = "<group>";
+		};
+		D963F5562281444A009D7A08 /* ScorePage */ = {
+			isa = PBXGroup;
+			children = (
+				D963F55722814461009D7A08 /* BPScoreViewController.swift */,
+			);
+			path = ScorePage;
 			sourceTree = "<group>";
 		};
 		E74E58C95F2009090D07DA85 /* Pods */ = {
@@ -414,8 +455,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D963F51E2281277E009D7A08 /* GameScene.swift in Sources */,
+				D963F5552281429B009D7A08 /* BPLeaderboardTableViewController.swift in Sources */,
 				D963F5202281277E009D7A08 /* GameViewController.swift in Sources */,
+				D963F5532281406F009D7A08 /* BPLeaderboardViewController.swift in Sources */,
 				D963F5182281277E009D7A08 /* AppDelegate.swift in Sources */,
+				D963F55822814461009D7A08 /* BPScoreViewController.swift in Sources */,
 				D963F54C22812E0B009D7A08 /* BPHomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
