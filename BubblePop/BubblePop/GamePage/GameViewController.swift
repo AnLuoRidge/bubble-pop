@@ -12,58 +12,35 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+    override func loadView() {
+        super.loadView()
+        let view = SKView(frame: UIScreen.main.bounds)
+        view.showsNodeCount = true
+        let gameScene = GameScene(size: view.bounds.size)
+        // TODO: check the scaleMode
+        gameScene.scaleMode = .fill
+        gameScene.backgroundColor = .white
+        view.presentScene(gameScene)
+        view.ignoresSiblingOrder = true
+
+        self.view = view
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
-        // including entities and graphs.
-        if let scene = GKScene(fileNamed: "GameScene") {
-            
-            // Get the SKScene from the loaded GKScene
-            if let sceneNode = scene.rootNode as! GameScene? {
-                
-                // Copy gameplay related content over to the scene
-                sceneNode.entities = scene.entities
-                sceneNode.graphs = scene.graphs
-                
-                // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFill
 
-                // Present the scene
-                let gameView = SKView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-                gameView.presentScene(sceneNode)
-                gameView.ignoresSiblingOrder = true
-                
-                // TODO: Lazy load
-                //                let gameView = SKView? {
-                //                    view.presentScene(sceneNode)
-                //
-                //                    view.ignoresSiblingOrder = true
-                //
-                //                    view.showsFPS = true
-                //                    view.showsNodeCount = true
-                //                }
-                view.addSubview(gameView)
-                
-//                // Present the scene
-//                if let view = self.view as! SKView? {
-//                    view.presentScene(sceneNode)
-//
-//                    view.ignoresSiblingOrder = true
-//
-//                    view.showsFPS = true
-//                    view.showsNodeCount = true
-//                }
-            }
-        }
-//                        let closing = Timer.init(timeInterval: 8, repeats: false) { (Timer) in
-//                            self.dismiss(animated: true, completion: nil)
-//                            
-//                        }
-//                        closing.fire()
-//        dismiss(animated: true, completion: nil)
+        // cast self.view to SKView
+//        self.view = SKView(frame: UIScreen.main.bounds)
 
+//        guard let view = self.view as? SKView else { return }
+//        view.showsNodeCount = true
+//        let gameScene = GameScene(size: view.bounds.size)
+//        // TODO: check the scaleMode
+//        gameScene.scaleMode = .fill
+//        view.presentScene(gameScene)
+//        view.ignoresSiblingOrder = true
     }
+
     override func viewDidAppear(_ animated: Bool) {
 //        present(BPScoreViewController(), animated: true, completion: nil)
     }
@@ -71,6 +48,28 @@ class GameViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return true
     }
+//
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        (self.view as? SKView)?.scene?.size = size
+//        guard let view = self.view as? SKView else { return }
+//        let scene = view.scene!
+//        let gameScene = scene as! GameScene
+//        gameScene.refresh()
+
+//        if var gameScene = view.scene {
+//            gameScene = gameScene as! GameScene
+//            gameScene.clear()
+//        }
+
+//        gameScene.clear()
+    }
+
+//
+//    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+//        super.willAnimateRotation(to: toInterfaceOrientation, duration: duration)
+//        loadView()
+//    }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
