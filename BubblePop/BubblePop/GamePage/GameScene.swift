@@ -26,12 +26,14 @@ class GameScene: SKScene {
     
     private var lastUpdateTime : TimeInterval = 0
     private var scoreLabel : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    private var highestScoreLabel = SKLabelNode()
 
     init(size: CGSize, highScore: Int, gameTime: Int, gameOverHandler: @escaping (Int) -> Void) {
         self.highScore =  highScore
         self.timeLeft = gameTime
         self.gameOverHandler = gameOverHandler
+//        print("High Score", highScore)
+//        print("Time", gameTime)
         super.init(size: size)
     }
 //
@@ -44,6 +46,7 @@ class GameScene: SKScene {
         self.removeAllChildren()
         spawnBubbles()
         scoreLbl()
+        highestScoreLbl()
         // TODO: remove
         //let name = UserDefaults.standard.string(forKey: "samplePlayer") ?? ""
 //        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
@@ -53,6 +56,17 @@ class GameScene: SKScene {
 //        for ()
     }
 
+
+    func highestScoreLbl() {
+        highestScoreLabel.position = CGPoint(x: 60, y: 300)
+        highestScoreLabel.text = "HIGHEST SCORE: " + String(highScore)
+        highestScoreLabel.fontColor = .black
+        self.addChild(highestScoreLabel)
+    }
+
+    func timeLeftLabel() {
+
+    }
 
     func scoreLbl() {
         scoreLabel = SKLabelNode(text: String(self.score))
@@ -69,6 +83,7 @@ class GameScene: SKScene {
 //        label?.position = CGPoint(x: scene?.frame.width/2, y: 0)//CGRect(x: 0, y: 0, width: 100, height: 30)
         self.addChild(scoreLabel!)
     }
+
     override func sceneDidLoad() {
 
         self.lastUpdateTime = 0
@@ -106,7 +121,7 @@ class GameScene: SKScene {
         // Setup a timer to run randomly between every 0.5 to 1.2 seconds
         let timer = Timer.scheduledTimer(withTimeInterval: timeInterval!, repeats: true, block: { _ in
             // limit bubble num. -1 for offset
-            if self.children.count > self.maxBubbles - 1 {
+            if self.children.count > Int.random(in: 0...self.maxBubbles) {
                 return
             }
 
@@ -265,19 +280,19 @@ Black	10	5%
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
+//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
+//            n.position = pos
+//            n.strokeColor = SKColor.blue
+//            self.addChild(n)
+//        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
+//            n.position = pos
+//            n.strokeColor = SKColor.red
+//            self.addChild(n)
+//        }
     }
 
     func handleGameOver() {

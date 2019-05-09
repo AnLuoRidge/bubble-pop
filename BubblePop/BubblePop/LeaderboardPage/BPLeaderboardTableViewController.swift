@@ -9,10 +9,19 @@
 import UIKit
 
 class BPLeaderboardTableViewController: UITableViewController {
+//    override func loadView() {
+//        super.loadView()
+//        tableView = UITableView(frame: CGRect.zero, style: .)
+//    }
+
+    var scores = [Score]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Leaderboard"
+        self.title = "High Scores"
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        scores = ScoreDAO.getSortedScores()
+
 //        let titleLable = UILabel()
 //        titleLable.frame = CGRect(x: 0, y: 200, width: UIScreen.main.bounds.width, height: 50)
 //        titleLable.backgroundColor = UIColor.white
@@ -36,16 +45,16 @@ class BPLeaderboardTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return scores.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        let cell = UITableViewCell()//.cellForRow(at: indexPath)
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = UITableViewCell.init(style: .value1, reuseIdentifier: "Cell")//.cellForRow(at: indexPath)
         // Configure the cell...
-        cell.textLabel?.text = "haha"
-
+        cell.textLabel?.text = scores[indexPath.row].name
+        cell.detailTextLabel?.text = String(scores[indexPath.row].score)
         return cell
     }
  

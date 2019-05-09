@@ -9,12 +9,24 @@ import os.log
 class ScoreDAO {
     internal static func saveScore(name: String, score: Int) {
         if var scores = UserDefaults.standard.dictionary(forKey: "scores") {
-            scores[name] = score
-            UserDefaults.standard.set(scores, forKey: "scores")
+            if scores[name] != nil {
+                if score < scores[name] as! Int {
+                    return
+                } else {
+                    scores[name] = score
+                    UserDefaults.standard.set(scores, forKey: "scores")
+                }
+            } else {
+                scores[name] = score
+                UserDefaults.standard.set(scores, forKey: "scores")
+            }
         } else {
-            os_log("Failed to read scores", log: OSLog.default, type: .error)
-
+            os_log("Failed to save scores", log: OSLog.default, type: .error)
         }
+    }
+
+    internal static func getSortedScores() -> [Score] {
+        return sortScores(getScores())
     }
 
     internal static func getScores() -> [Score] {
@@ -25,7 +37,7 @@ class ScoreDAO {
                 scores.append(Score(name: name, score: score))
 //                let customLog = OSLog(subsystem: "com.your_company.your_subsystem_name.plist", category: "your_category_name")
 //            let msg = "name: \(name)\nscore: \(score)"
-                os_log("Failed to read scores", log: OSLog.default, type: .error)
+                os_log("Failed to read scores", log: OSLog.default, type: .debug)
             }
         }
         return scores

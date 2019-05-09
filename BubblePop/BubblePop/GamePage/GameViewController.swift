@@ -11,24 +11,24 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    var maxBubbleNum = 15
+    var gameTime = 10
+    var highScore = 999
 
     override func loadView() {
         super.loadView()
-        let highScore = 999
-        let gameTime = 10
         let view = SKView(frame: UIScreen.main.bounds)
         view.showsNodeCount = true
+        setup()
         let gameScene = GameScene(size: view.bounds.size, highScore: highScore, gameTime: gameTime, gameOverHandler: handleGameOver)
             // TODO: check the scaleMode
             gameScene.scaleMode = .fill
             gameScene.backgroundColor = .white
-            gameScene.highScore = 999
 
             view.presentScene(gameScene)
             view.ignoresSiblingOrder = true
 
             self.view = view
-
     }
 
     override func viewDidLoad() {
@@ -43,6 +43,14 @@ class GameViewController: UIViewController {
 //        gameScene.scaleMode = .fill
 //        view.presentScene(gameScene)
 //        view.ignoresSiblingOrder = true
+    }
+
+    func setup() {
+        maxBubbleNum = UserDefaults.standard.integer(forKey: "maxBubbleNum")
+        if maxBubbleNum == 0 { maxBubbleNum = 15}
+        gameTime = UserDefaults.standard.integer(forKey: "gameTime")
+        if gameTime == 0 { gameTime = 10 }
+        highScore = ScoreDAO.getSortedScores()[0].score
     }
 
     override func viewDidAppear(_ animated: Bool) {

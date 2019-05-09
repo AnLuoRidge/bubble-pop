@@ -11,6 +11,7 @@
 		704A08EDB6C0860DE09CB788 /* Pods_BubblePopUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65D9F5BED3D40F068B06DDC7 /* Pods_BubblePopUITests.framework */; };
 		9553566614574756CAE24688 /* ScoreDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535DB3887DD2F7C53C78E3 /* ScoreDAO.swift */; };
 		95535B52EDE76627007C62ED /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535C91E09F927AC51CE30B /* Score.swift */; };
+		95535B72A2FB21AEDA17DD55 /* BPSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955357480F7199518DC0D9A8 /* BPSettingsViewController.swift */; };
 		95535DE43F4C843665BE77BB /* BubbleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535A9078BB57721E1BCC23 /* BubbleNode.swift */; };
 		95535EE8C6E340CEFC25D379 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955351B43DC69D173BB8DD44 /* GameScene.swift */; };
 		CB06E3F3E1E5CC11C673BB64 /* Pods_BubblePop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CFAA73185CEA99265DDEDA /* Pods_BubblePop.framework */; };
@@ -51,6 +52,7 @@
 		65D9F5BED3D40F068B06DDC7 /* Pods_BubblePopUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BubblePopUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4CBFF68727593DE4B6B41F /* Pods-BubblePop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubblePop.debug.xcconfig"; path = "Target Support Files/Pods-BubblePop/Pods-BubblePop.debug.xcconfig"; sourceTree = "<group>"; };
 		955351B43DC69D173BB8DD44 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		955357480F7199518DC0D9A8 /* BPSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSettingsViewController.swift; sourceTree = "<group>"; };
 		95535A9078BB57721E1BCC23 /* BubbleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleNode.swift; sourceTree = "<group>"; };
 		95535C91E09F927AC51CE30B /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		95535DB3887DD2F7C53C78E3 /* ScoreDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreDAO.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 		D963F54F22813A9D009D7A08 /* SettingsPage */ = {
 			isa = PBXGroup;
 			children = (
+				955357480F7199518DC0D9A8 /* BPSettingsViewController.swift */,
 			);
 			path = SettingsPage;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				95535DE43F4C843665BE77BB /* BubbleNode.swift in Sources */,
 				95535B52EDE76627007C62ED /* Score.swift in Sources */,
 				9553566614574756CAE24688 /* ScoreDAO.swift in Sources */,
+				95535B72A2FB21AEDA17DD55 /* BPSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

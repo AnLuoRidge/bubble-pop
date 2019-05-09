@@ -22,8 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          window?.makeKeyAndVisible()
          */
         window?.backgroundColor = .white
-//        window?.rootViewController = GameViewController()
-        window?.rootViewController = UINavigationController(rootViewController: BPLeaderboardTableViewController())
+
+//                window?.rootViewController = BPSettingsViewController()
+
+        window?.rootViewController = GameViewController()
+//        window?.rootViewController = UINavigationController(rootViewController: BPLeaderboardTableViewController())
         return true
     }
 

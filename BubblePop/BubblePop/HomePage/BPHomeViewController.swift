@@ -42,7 +42,6 @@ class BPHomeViewController: UIViewController {
     @objc
     func buttonClick() {
 //        navigationController?.pushViewController(GameViewController(), animated: true)
-        // 另一种跳转方式
          present(GameViewController(), animated: true, completion: nil)
     }
 
