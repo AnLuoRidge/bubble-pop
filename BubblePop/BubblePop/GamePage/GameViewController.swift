@@ -14,21 +14,25 @@ class GameViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
+        let highScore = 999
+        let gameTime = 10
         let view = SKView(frame: UIScreen.main.bounds)
         view.showsNodeCount = true
-        let gameScene = GameScene(size: view.bounds.size)
-        // TODO: check the scaleMode
-        gameScene.scaleMode = .fill
-        gameScene.backgroundColor = .white
-        view.presentScene(gameScene)
-        view.ignoresSiblingOrder = true
+        let gameScene = GameScene(size: view.bounds.size, highScore: highScore, gameTime: gameTime, gameOverHandler: handleGameOver)
+            // TODO: check the scaleMode
+            gameScene.scaleMode = .fill
+            gameScene.backgroundColor = .white
+            gameScene.highScore = 999
 
-        self.view = view
+            view.presentScene(gameScene)
+            view.ignoresSiblingOrder = true
+
+            self.view = view
+
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // cast self.view to SKView
 //        self.view = SKView(frame: UIScreen.main.bounds)
 
@@ -81,5 +85,10 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+
+    // pass into game view as a block
+    func handleGameOver(score: Int) {
+        print("Player: xxxx, GameVC received the gameOver and score is \(score)")
     }
 }

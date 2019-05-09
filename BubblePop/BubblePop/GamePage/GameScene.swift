@@ -14,34 +14,45 @@ class GameScene: SKScene {
     static let scoreBarHeight = CGFloat(120)
     static let pink = UIColor.init(red: 254/255, green: 127/255, blue: 156/255, alpha: 1) // TODO: UIColor extension
     private var score = 0
+    var maxBubbles = 15
     var highScore = 0
     var timeLeft = 60
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     var bubbles = [SKShapeNode]()
     var lastColorHash = 0
+    var gameOverHandler: (Int) -> Void
 //    var timer = Timer()
     
     private var lastUpdateTime : TimeInterval = 0
     private var scoreLabel : SKLabelNode?
     private var spinnyNode : SKShapeNode?
 
-//    override init(size: CGSize, highScore: Int, time: Int) {
-//        super.init(size: size)
-//        self.highScore =  highScore
-//        self.timeLeft = time
-//    }
+    init(size: CGSize, highScore: Int, gameTime: Int, gameOverHandler: @escaping (Int) -> Void) {
+        self.highScore =  highScore
+        self.timeLeft = gameTime
+        self.gameOverHandler = gameOverHandler
+        super.init(size: size)
+    }
 //
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         self.removeAllChildren()
         spawnBubbles()
         scoreLbl()
+        // TODO: remove
+        //let name = UserDefaults.standard.string(forKey: "samplePlayer") ?? ""
+//        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
+//            print("\(key) = \(value) \n")
+//        }
+//
+//        for ()
     }
+
 
     func scoreLbl() {
         scoreLabel = SKLabelNode(text: String(self.score))
@@ -94,6 +105,10 @@ class GameScene: SKScene {
 
         // Setup a timer to run randomly between every 0.5 to 1.2 seconds
         let timer = Timer.scheduledTimer(withTimeInterval: timeInterval!, repeats: true, block: { _ in
+            // limit bubble num. -1 for offset
+            if self.children.count > self.maxBubbles - 1 {
+                return
+            }
 
             let bubble = self.bubbleNode()
             for oldBubble in self.children {
@@ -101,6 +116,7 @@ class GameScene: SKScene {
                     return
                 }
             }
+
             bubble.name = "bubble"
 
             /*
@@ -189,7 +205,7 @@ class GameScene: SKScene {
 
         let translateAction = SKAction.move(
                 to: outPoint,
-                duration: 10// TimeInterval(Float.random(in: 10...15))
+                duration: 5// TimeInterval(Float.random(in: 10...15))
         )
 
         // Remove the bubble when it reaches the top of the screen
@@ -263,12 +279,18 @@ Black	10	5%
             self.addChild(n)
         }
     }
+
+    func handleGameOver() {
+        UserDefaults.standard.set(["samplePlayer":score], forKey: "playerScore")
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
 //        }
-
+    // TODO: remove following
+        gameOverHandler(self.score)
+//        handleGameOver()
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     

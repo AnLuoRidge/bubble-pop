@@ -13,6 +13,12 @@ class BPLeaderboardTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Leaderboard"
+//        let titleLable = UILabel()
+//        titleLable.frame = CGRect(x: 0, y: 200, width: UIScreen.main.bounds.width, height: 50)
+//        titleLable.backgroundColor = UIColor.white
+//        titleLable.text = "Leaderboard"
+//        titleLable.textColor = .green
+//        view.addSubview(titleLable)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
