@@ -25,8 +25,16 @@ class GameScene: SKScene {
 //    var timer = Timer()
     
     private var lastUpdateTime : TimeInterval = 0
-    private var scoreLabel : SKLabelNode?
-    private var highestScoreLabel = SKLabelNode()
+
+    private var scoreLabel = SKLabelNode()
+    private var scoreValueLabel = SKLabelNode()
+    private let highestScoreLabel = SKLabelNode()
+    private let highestScoreValueLabel = SKLabelNode()
+    private var timeLeftLabel = SKLabelNode()
+    private let timeLeftValueLabel = SKLabelNode()
+
+    private let titleLabelY = CGFloat(200)
+    private let valueLabelY = CGFloat(250)
 
     init(size: CGSize, highScore: Int, gameTime: Int, gameOverHandler: @escaping (Int) -> Void) {
         self.highScore =  highScore
@@ -45,8 +53,17 @@ class GameScene: SKScene {
         super.didMove(to: view)
         self.removeAllChildren()
         spawnBubbles()
+
+        // TODO: copy to didSizeChange
         scoreLbl()
+        scoreValueLbl()
         highestScoreLbl()
+        highestScoreValueLbl()
+        timeLeftLbl()
+        timeLeftValueLbl()
+
+        fireGameTimer()
+//        scene?.view?.addSubview(LoginViewStevia())
         // TODO: remove
         //let name = UserDefaults.standard.string(forKey: "samplePlayer") ?? ""
 //        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
@@ -64,24 +81,61 @@ class GameScene: SKScene {
         self.addChild(highestScoreLabel)
     }
 
-    func timeLeftLabel() {
+    func highestScoreValueLbl() {
+        highestScoreValueLabel.position = CGPoint(x: 60, y: 220)
+        highestScoreValueLabel.horizontalAlignmentMode = .center
+        self.addChild(highestScoreValueLabel)
+    }
 
+    func timeLeftLbl() {
+        timeLeftLabel.position = CGPoint(x: 0, y: titleLabelY)
+        timeLeftLabel.horizontalAlignmentMode = .left
+        timeLeftLabel.text = "Time Left"
+        timeLeftLabel.fontSize = 30
+        timeLeftLabel.fontColor = .black
+        self.addChild(timeLeftLabel)
+    }
+
+    func timeLeftValueLbl() {
+        timeLeftValueLabel.position = CGPoint(x: 30, y: 0)
+        timeLeftValueLabel.horizontalAlignmentMode = .center
+        timeLeftValueLabel.text = String(timeLeft)
+        timeLeftValueLabel.fontSize = 28
+        timeLeftValueLabel.fontColor = .black
+        self.addChild(timeLeftValueLabel)
     }
 
     func scoreLbl() {
-        scoreLabel = SKLabelNode(text: String(self.score))
-        scoreLabel?.fontSize = 40
-        scoreLabel?.horizontalAlignmentMode = .center
-        scoreLabel?.fontColor = .black
+
+    }
+
+    func scoreValueLbl() {
+        scoreValueLabel = SKLabelNode(text: String(self.score))
+        scoreValueLabel.fontSize = 40
+        scoreValueLabel.horizontalAlignmentMode = .center
+        scoreValueLabel.fontColor = .black
         // TODO: score font
 //        scoreLabel?.fontName = .
         if let sceneWidth = scene?.frame.width {
             if let sceneHeight = scene?.frame.height {
-                scoreLabel?.position = CGPoint(x: sceneWidth/2, y: sceneHeight - 50)
+                scoreValueLabel.position = CGPoint(x: sceneWidth/2, y: sceneHeight - 50)
             }
         }
 //        label?.position = CGPoint(x: scene?.frame.width/2, y: 0)//CGRect(x: 0, y: 0, width: 100, height: 30)
-        self.addChild(scoreLabel!)
+        self.addChild(scoreValueLabel)
+    }
+
+    func fireGameTimer() {
+        let gameTimer = Timer(timeInterval: TimeInterval(exactly: 1)!, repeats: true, block: { timer in
+            self.timeLeft -= 1
+            print(self.timeLeft)
+            self.timeLeftValueLabel.text = String(self.timeLeft)
+            if self.timeLeft == 0 {
+                timer.invalidate()
+                self.handleGameOver()
+            }
+        })
+        gameTimer.fire()
     }
 
     override func sceneDidLoad() {
@@ -239,7 +293,7 @@ class GameScene: SKScene {
     func touchDown(atPoint pos : CGPoint) {
         for node in self.children {
             if node.frame.contains(pos) {
-                let bubble = node as! SKShapeNode
+                if let bubble = node as? SKShapeNode {
                 /*
                 Red	1	40%
 Pink	2	30%
@@ -266,10 +320,10 @@ Black	10	5%
                     scoreEarned *= 1.5
                 }
                 self.score += Int(round(scoreEarned))
-                scoreLabel?.text = String(self.score)
+                scoreValueLabel.text = String(self.score)
                 lastColorHash = bubble.fillColor.hash
                 bubble.removeFromParent()
-                return
+                return} else {return}
             }
         }
 //        let bubbleFrame = CGRect(x: 50, y: 50, width: 50, height: 50)

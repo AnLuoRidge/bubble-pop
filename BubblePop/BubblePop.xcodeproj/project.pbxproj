@@ -12,6 +12,7 @@
 		9553566614574756CAE24688 /* ScoreDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535DB3887DD2F7C53C78E3 /* ScoreDAO.swift */; };
 		95535B52EDE76627007C62ED /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535C91E09F927AC51CE30B /* Score.swift */; };
 		95535B72A2FB21AEDA17DD55 /* BPSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955357480F7199518DC0D9A8 /* BPSettingsViewController.swift */; };
+		95535B7BA1EDA30BA4562FEB /* BPSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535E2DE4B4F8753156E59D /* BPSettingsView.swift */; };
 		95535DE43F4C843665BE77BB /* BubbleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95535A9078BB57721E1BCC23 /* BubbleNode.swift */; };
 		95535EE8C6E340CEFC25D379 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955351B43DC69D173BB8DD44 /* GameScene.swift */; };
 		CB06E3F3E1E5CC11C673BB64 /* Pods_BubblePop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34CFAA73185CEA99265DDEDA /* Pods_BubblePop.framework */; };
@@ -56,6 +57,7 @@
 		95535A9078BB57721E1BCC23 /* BubbleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleNode.swift; sourceTree = "<group>"; };
 		95535C91E09F927AC51CE30B /* Score.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		95535DB3887DD2F7C53C78E3 /* ScoreDAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreDAO.swift; sourceTree = "<group>"; };
+		95535E2DE4B4F8753156E59D /* BPSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPSettingsView.swift; sourceTree = "<group>"; };
 		BA91B35E2734676EBDB82513 /* Pods_BubblePopTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BubblePopTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8A55DC4BD8A87A36987EBF1 /* Pods-BubblePop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubblePop.release.xcconfig"; path = "Target Support Files/Pods-BubblePop/Pods-BubblePop.release.xcconfig"; sourceTree = "<group>"; };
 		D963F5142281277D009D7A08 /* BubblePop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblePop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				955357480F7199518DC0D9A8 /* BPSettingsViewController.swift */,
+				95535E2DE4B4F8753156E59D /* BPSettingsView.swift */,
 			);
 			path = SettingsPage;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				95535B52EDE76627007C62ED /* Score.swift in Sources */,
 				9553566614574756CAE24688 /* ScoreDAO.swift in Sources */,
 				95535B72A2FB21AEDA17DD55 /* BPSettingsViewController.swift in Sources */,
+				95535B7BA1EDA30BA4562FEB /* BPSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

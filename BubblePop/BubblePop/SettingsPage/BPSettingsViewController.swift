@@ -77,6 +77,7 @@ class BPSettingsViewController: UIViewController {
         gameTimeIndicatorLabel.frame = CGRect(x: 400, y: gameTimeY, width: stepperLabelW, height: commonH)
         gameTimeIndicatorLabel.text = String(Int(gameTimeStepper.value))
 
+
 //        startBtn.titleLabel?.text = "Start"
         view.addSubview(maxBubbleNumLabel)
         view.addSubview(maxBubbleNumStepper)
@@ -84,7 +85,12 @@ class BPSettingsViewController: UIViewController {
         view.addSubview(gameTimeLabel)
         view.addSubview(gameTimeStepper)
         view.addSubview(gameTimeIndicatorLabel)
+        self.view = LoginViewStevia()
     }
+
+    func addConstriants() {
+
+}
 
 //    func addSubviews
     override func viewDidLoad() {
