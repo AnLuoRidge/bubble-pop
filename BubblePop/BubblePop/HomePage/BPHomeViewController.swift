@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Stevia
 
 class BPHomeViewController: UIViewController {
 
@@ -40,15 +39,12 @@ class BPHomeViewController: UIViewController {
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.addTarget(self, action: #selector(toSettings), for: .touchUpInside)
         view.addSubview(settingsButton)
-
-
         // Do any additional setup after loading the view.
-        
     }
     @objc
     func start() {
 //        navigationController?.pushViewController(GameViewController(), animated: true)
-        let alert = UIAlertController(title: "Your Name", message: "Feel free to skip~", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Your Name", message: "Keep anonymous by leaving it blank", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
@@ -57,7 +53,7 @@ class BPHomeViewController: UIViewController {
         })
 
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            if let name = alert.textFields?.first?.text {
+            if let name = alert.textFields?.first?.text, !name.isEmpty {
                 self.present(GameViewController(playerName: name), animated: true)
             } else {
                 self.present(GameViewController(), animated: true)

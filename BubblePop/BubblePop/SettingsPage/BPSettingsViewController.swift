@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Stevia
 
 class BPSettingsViewController: UIViewController {
 
@@ -86,13 +85,12 @@ class BPSettingsViewController: UIViewController {
         view.addSubview(gameTimeLabel)
         view.addSubview(gameTimeStepper)
         view.addSubview(gameTimeIndicatorLabel)
-//        self.view = LoginViewStevia()
     }
 
     func saveButton() {
         let backButton = UIButton(type: .system)
-        backButton.frame = CGRect(x: 0, y: 300, width: 80, height: 50)
-        backButton.setTitle("Back", for: .normal)
+        backButton.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 300, width: 80, height: 50)
+        backButton.setTitle("Save", for: .normal)
         backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
         view.addSubview(backButton)
     }
@@ -153,13 +151,6 @@ class BPSettingsViewController: UIViewController {
 //        sender.value = roundedValue
 //        sender.setValue(roundedValue, animated: true)
     }
-
-    func buttonClick() {
-//        navigationController?.popToRootViewController(animated: true)
-//        navigationController?.pushViewController(GameViewController(), animated: true)
-        present(GameViewController(), animated: true, completion: nil)
-    }
-
     /*
     // MARK: - Navigation
 

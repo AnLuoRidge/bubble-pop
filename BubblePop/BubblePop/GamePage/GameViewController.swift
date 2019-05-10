@@ -36,8 +36,8 @@ class GameViewController: UIViewController {
         super.loadView()
         let view = SKView(frame: UIScreen.main.bounds)
         view.showsNodeCount = true
-        setup()
-        let gameScene = GameScene(size: view.bounds.size, highScore: highScore, gameTime: gameTime, gameOverHandler: handleGameOver)
+        initialValues()
+        let gameScene = GameScene(size: view.bounds.size, highScore: highScore, gameTime: gameTime, maxBubbleNum: maxBubbleNum, gameOverHandler: handleGameOver)
             // TODO: check the scaleMode
             gameScene.scaleMode = .fill
             gameScene.backgroundColor = .white
@@ -62,7 +62,7 @@ class GameViewController: UIViewController {
 //        view.ignoresSiblingOrder = true
     }
 
-    func setup() {
+    func initialValues() {
         maxBubbleNum = UserDefaults.standard.integer(forKey: "maxBubbleNum")
         if maxBubbleNum == 0 { maxBubbleNum = 15}
         gameTime = UserDefaults.standard.integer(forKey: "gameTime")
@@ -115,10 +115,10 @@ class GameViewController: UIViewController {
     // pass into game view as a block
     func handleGameOver(score: Int) {
         #if DEBUG
-        os_log("Player: %@, Score: %@", log: OSLog.default, type: .info, playerName, score)
+        os_log("Player: %@, Score: %@", log: OSLog.default, type: .info, playerName, String(score))
         #endif
 
         ScoreDAO.saveScore(name: playerName, score: score)
-        present(BPLeaderboardTableViewController(), animated: true)
+        present(BPLeaderboardTableViewController(yourScore: score), animated: true)
     }
 }

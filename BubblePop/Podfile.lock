@@ -1,16 +1,16 @@
 PODS:
-  - SteviaLayout (4.5.0)
+  - SnapKit (5.0.0)
 
 DEPENDENCIES:
-  - SteviaLayout (~> 4.5.0)
+  - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - SteviaLayout
+    - SnapKit
 
 SPEC CHECKSUMS:
-  SteviaLayout: aa64a62810544348c9e328a6521cb9160fa82ec6
+  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
 
-PODFILE CHECKSUM: 012674e85460e3a409ec2741555d453e9fc7045c
+PODFILE CHECKSUM: 8a78c06eb40478e20b0d63f436b44c9ee98b90b7
 
 COCOAPODS: 1.6.1

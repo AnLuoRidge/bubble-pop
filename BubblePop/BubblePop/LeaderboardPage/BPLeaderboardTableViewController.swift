@@ -11,53 +11,23 @@ import UIKit
 class BPLeaderboardTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var scores = [Score]()
+    let yourScore: Int?
+    
+    init(yourScore: Int?) {
+        self.yourScore = yourScore
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.yourScore = 0
+        super.init(coder: aDecoder)
+    }
 
     override func loadView() {
-        super.loadView()
-        let tableView = UITableView(frame: CGRect(x: 100, y: 60, width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height - 220))
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.isScrollEnabled = false
-        tableView.allowsSelection = false
-        tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.view.addSubview(tableView)
+        super.loadView() // must be called first
 
-
-
-        let restartButton = UIButton(type: .roundedRect)
-        restartButton.frame = CGRect(x: 100, y: 0, width: 180, height: 50)
-        restartButton.setTitle("Play again", for: .normal)
-//        restartButton.backgroundColor = .blue
-        restartButton.setTitleColor(.black, for: .normal)
-        let font = UIFont.boldSystemFont(ofSize: 28)
-        let shadow = NSShadow()
-        shadow.shadowColor = UIColor.lightGray
-        shadow.shadowBlurRadius = 5
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: UIColor.black,
-            .shadow: shadow
-        ]
-        restartButton.setAttributedTitle(NSAttributedString(string: "Play again", attributes: attributes), for: .normal)
-        restartButton.layer.borderColor = UIColor.black.cgColor
-        restartButton.layer.borderWidth = 1
-        restartButton.layer.cornerRadius = 5
-        restartButton.addTarget(self, action: #selector(restart), for: .touchUpInside)
-        self.view.addSubview(restartButton)
-
-        let backButton = UIButton(type: .system)
-        backButton.setTitle("< Back", for: .normal)
-        backButton.frame = CGRect(x: 300, y: 0, width: 100, height: 50)
-        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
-        view.addSubview(backButton)
-
-        let titleLabel = UILabel()
-        titleLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        titleLabel.backgroundColor = .white
-        titleLabel.text = "Leaderboard"
-        titleLabel.textColor = .green
-        view.addSubview(titleLabel)
+        let leaderboardView = BPLeaderboardView(tableViewDelegate: self, tableViewDataSource: self, score: yourScore)
+        self.view = leaderboardView
     }
 
     @objc
@@ -79,6 +49,9 @@ class BPLeaderboardTableViewController: UIViewController, UITableViewDelegate, U
         super.viewDidLoad()
         self.title = "High Scores"
         scores = ScoreDAO.getSortedScores()
+        #if DEBUG
+        print(scores)
+        #endif
 
 //        self.tableView.frame =  CGRect(x: 100, y: 100, width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height - 120)
 

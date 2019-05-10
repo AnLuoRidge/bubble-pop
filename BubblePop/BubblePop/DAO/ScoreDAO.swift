@@ -7,18 +7,19 @@ import Foundation
 import os.log
 
 class ScoreDAO {
+    private static let scoresKey = "scores"
     internal static func saveScore(name: String, score: Int) {
-        if var scores = UserDefaults.standard.dictionary(forKey: "scores") {
+        if var scores = UserDefaults.standard.dictionary(forKey: scoresKey) {
             if scores[name] != nil {
                 if score < scores[name] as! Int {
                     return
                 } else {
                     scores[name] = score
-                    UserDefaults.standard.set(scores, forKey: "scores")
+                    UserDefaults.standard.set(scores, forKey: scoresKey)
                 }
             } else {
                 scores[name] = score
-                UserDefaults.standard.set(scores, forKey: "scores")
+                UserDefaults.standard.set(scores, forKey: scoresKey)
             }
         } else {
             os_log("%@：Failed to save scores.", log: OSLog.default, type: .error, #function)
@@ -31,7 +32,7 @@ class ScoreDAO {
 
     internal static func getScores() -> [Score] {
         var scores = [Score]()
-        if let scoresDict = UserDefaults.standard.dictionary(forKey: "scores") {
+        if let scoresDict = UserDefaults.standard.dictionary(forKey: scoresKey) {
             for (name, rawScore) in scoresDict {
                 let score = rawScore as! Int
                 scores.append(Score(name: name, score: score))
@@ -48,4 +49,13 @@ class ScoreDAO {
         sortedScores.sort { score, score2 in score.score > score2.score }
         return sortedScores
     }
+    
+    #if DEBUG
+    internal static func clearEmptyNames() {
+        if var scoresDict = UserDefaults.standard.dictionary(forKey: scoresKey) {
+            scoresDict.removeValue(forKey: "")
+            UserDefaults.standard.set(scoresDict, forKey: scoresKey)
+        }
+    }
+    #endif
 }

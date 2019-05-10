@@ -37,13 +37,11 @@ class GameScene: SKScene {
     private let titleLabelY = CGFloat(200)
     private let valueLabelY = CGFloat(250)
 
-    init(size: CGSize, highScore: Int, gameTime: Int, gameOverHandler: @escaping (Int) -> Void) {
+    init(size: CGSize, highScore: Int, gameTime: Int, maxBubbleNum: Int, gameOverHandler: @escaping (Int) -> Void) {
         self.highScore =  highScore
         self.timeLeft = gameTime
         self.gameOverHandler = gameOverHandler
-//        print("High Score", highScore)
-//        print("Time", gameTime)
-
+        self.maxBubbles = maxBubbleNum
         super.init(size: size)
     }
 //
@@ -366,9 +364,6 @@ Black	10	5%
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
 //        }
-    // TODO: remove following
-        gameOverHandler(self.score)
-//        handleGameOver()
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     
