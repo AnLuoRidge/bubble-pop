@@ -24,10 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
 
 //                window?.rootViewController = BPSettingsViewController()
-
+//
 //        window?.rootViewController = GameViewController()
-        window?.rootViewController = BPLeaderboardTableViewController(yourScore: nil)
-//        window?.rootViewController = BPHomeViewController()
+//        window?.rootViewController = BPLeaderboardTableViewController(yourScore: nil)
+        window?.rootViewController = BPHomeViewController()
 
 //        window?.rootViewController = UINavigationController(rootViewController: BPLeaderboardTableViewController())
         return true

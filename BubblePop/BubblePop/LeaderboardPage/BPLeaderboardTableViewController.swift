@@ -81,6 +81,7 @@ class BPLeaderboardTableViewController: UIViewController, UITableViewDelegate, U
         // Configure the cell...
         cell.textLabel?.text = scores[indexPath.row].name
         cell.detailTextLabel?.text = String(scores[indexPath.row].score)
+        cell.detailTextLabel?.textColor = .black
         return cell
     }
  

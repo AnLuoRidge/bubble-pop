@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
     private var gameTime = 10
     private var highScore = 999
     private let playerName: String
-    private static let randomNames = ["THE MAGICIAN", "THE HERMIT"]
+    private static let randomNames = ["THE MAGICIAN", "THE HERMIT", "Anonymous"]
 
     convenience init() {
         self.init(playerName: GameViewController.randomNames.randomElement()!)
@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
     override func loadView() {
         super.loadView()
         let view = SKView(frame: UIScreen.main.bounds)
-        view.showsNodeCount = true
+//        view.showsNodeCount = true
         initialValues()
         let gameScene = GameScene(size: view.bounds.size, highScore: highScore, gameTime: gameTime, maxBubbleNum: maxBubbleNum, gameOverHandler: handleGameOver)
             // TODO: check the scaleMode
@@ -117,7 +117,6 @@ class GameViewController: UIViewController {
         #if DEBUG
         os_log("Player: %@, Score: %@", log: OSLog.default, type: .info, playerName, String(score))
         #endif
-
         ScoreDAO.saveScore(name: playerName, score: score)
         present(BPLeaderboardTableViewController(yourScore: score), animated: true)
     }

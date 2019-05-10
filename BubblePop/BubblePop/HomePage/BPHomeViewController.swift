@@ -7,44 +7,92 @@
 //
 
 import UIKit
+import SnapKit
 
 class BPHomeViewController: UIViewController {
+    private let titleLabel = UILabel()
+    private let startButton = UIButton(type: .custom)
+    let settingsButton = UIButton(type: .system)
 
-//    override func loadView() {
-//        let startBtn = UIButton()
-//        view.backgroundColor = .red
-////        startBtn.titleLabel?.text = "Start"
-////        view.addSubview(startBtn)
-//    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
         view.backgroundColor = .white
-//        let startBtn = UIButton()
-//                startBtn.titleLabel?.text = "Start"
-//                view.addSubview(startBtn)
-
-
+        //        let startBtn = UIButton()
+        //                startBtn.titleLabel?.text = "Start"
+        //                view.addSubview(startBtn)
         
-        let startButton = UIButton(type: .custom)
-        startButton.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
-        startButton.backgroundColor = .white
-        startButton.setTitle("Start", for: .normal)
-        startButton.setTitleColor(UIColor.gray, for: .normal)
+        let titleLabelFont = UIFont.boldSystemFont(ofSize: 45)
+        let titleLabelAttributes: [NSAttributedString.Key: Any] = [
+            .font: titleLabelFont,
+            .foregroundColor: UIColor.black,
+        ]
+        titleLabel.attributedText = NSAttributedString(string: "Bubble Pop", attributes: titleLabelAttributes)
+        view.addSubview(titleLabel)
+        
+        
+        
+        startButton.layer.borderColor = UIColor.gray.cgColor
+        startButton.layer.borderWidth = 1
+        startButton.layer.cornerRadius = 5
+        //        startButton.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
+        //        startButton.backgroundColor = .white
+        startButton.setTitleColor(.black, for: .normal)
+        let font = UIFont.boldSystemFont(ofSize: 35)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.black,
+        ]
+        startButton.setAttributedTitle(NSAttributedString(string: "Start", attributes: attributes), for: .normal)
         view.addSubview(startButton)
-//        button.addTarget(self, action: Selector(buttonClick()), for: .touchUpInside)
         startButton.addTarget(self, action: #selector(start), for: .touchUpInside)
-
-        let settingsButton = UIButton(type: .system)
-        settingsButton.frame = CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 50)
+        
+        //        settingsButton.frame = CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 50)
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.addTarget(self, action: #selector(toSettings), for: .touchUpInside)
         view.addSubview(settingsButton)
+        
+        addConstraints()
+    }
+    
+    func addConstraints() {
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(view).offset(UIScreen.main.bounds.height/3)
+        }
+        settingsButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self.view).offset(-50)
+            make.centerX.equalTo(self.view)
+        }
+        startButton.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self.view)
+            make.bottom.equalTo(settingsButton.snp_topMargin).offset(-20)
+            make.width.equalTo(160)
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        let width = size.width
+        let height = size.height
+        
+        if width > height {
+            titleLabel.snp.removeConstraints()
+            titleLabel.snp.makeConstraints { (make) in
+                make.centerX.equalTo(view)
+                make.top.equalTo(view).offset(UIScreen.main.bounds.height/6)
+            }
+        }
+    }
+    
     @objc
     func start() {
 //        navigationController?.pushViewController(GameViewController(), animated: true)
-        let alert = UIAlertController(title: "Your Name", message: "Keep anonymous by leaving it blank", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Your Name", message: "To be anonymous just leaving it blank", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 

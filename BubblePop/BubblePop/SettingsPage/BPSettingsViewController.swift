@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class BPSettingsViewController: UIViewController {
 
@@ -23,6 +24,7 @@ class BPSettingsViewController: UIViewController {
         }
     }
 
+    let settingsLabel = UILabel()
     let stepperW = CGFloat(200)
     let commonH = CGFloat(20)
     let stepperLabelW = CGFloat(200)
@@ -38,17 +40,25 @@ class BPSettingsViewController: UIViewController {
     let maxBubbleNumStepper = UIStepper()
     let gameTimeStepper = UIStepper()
     let gameTimeIndicatorLabel = UILabel()
-
+    let saveButton = UIButton(type: .system)
 
     override func loadView() {
         super.loadView()
+        
+        
+        let titleLabelFont = UIFont.boldSystemFont(ofSize: 45)
+        let titleLabelAttributes: [NSAttributedString.Key: Any] = [
+            .font: titleLabelFont,
+            .foregroundColor: UIColor.black,
+        ]
+        settingsLabel.attributedText = NSAttributedString(string: "Settings", attributes: titleLabelAttributes)
+        view.addSubview(settingsLabel)
 
 
 
-
-        let maxBubbleNumLabel = UILabel(frame: CGRect(x: 30, y: maxBubbleNumY, width: stepperLabelW, height: commonH))
+        let maxBubbleNumLabel = UILabel()
         maxBubbleNumLabel.text = "Maximum bubbles："
-        maxBubbleNumStepper.frame = CGRect(x: 300, y: maxBubbleNumY, width: stepperW, height: 20)
+        maxBubbleNumStepper.tintColor = .black
         maxBubbleNumStepper.minimumValue = 5
         maxBubbleNumStepper.maximumValue = 30
         maxBubbleNumStepper.stepValue = 5
@@ -56,8 +66,8 @@ class BPSettingsViewController: UIViewController {
 //        maxBubbleNumSlider.value = 15
         maxBubbleNumStepper.addTarget(self, action: #selector(maxBubbleNumStepperValueChanged), for: .valueChanged)
 
-        maxBubbleNumIndicatorLabel.frame = CGRect(x: 200, y: maxBubbleNumY, width: 50, height: commonH)
-        maxBubbleNumIndicatorLabel.text = "15"
+//        maxBubbleNumIndicatorLabel.frame = CGRect(x: 200, y: maxBubbleNumY, width: 50, height: commonH)
+//        maxBubbleNumIndicatorLabel.text = "15"
 
 
         let gameTimeLabel = UILabel()
@@ -65,7 +75,8 @@ class BPSettingsViewController: UIViewController {
         gameTimeLabel.text = "Game Time："
 
 //        let gameTimeStepper = UIStepper()
-        gameTimeStepper.frame = CGRect(x: marginLeft + gameTimeLabelW + 10, y: gameTimeY, width: stepperW, height: commonH)
+//        gameTimeStepper.frame = CGRect(x: marginLeft + gameTimeLabelW + 10, y: gameTimeY, width: stepperW, height: commonH)
+        gameTimeStepper.tintColor = .black
         gameTimeStepper.minimumValue = 10
         gameTimeStepper.maximumValue = 120
         gameTimeStepper.isContinuous = true
@@ -73,10 +84,10 @@ class BPSettingsViewController: UIViewController {
 //        gameTimeStepper.value = 60
         gameTimeStepper.addTarget(self, action: #selector(gameTimeStepperValueChanged), for: .valueChanged)
 
-        gameTimeIndicatorLabel.frame = CGRect(x: 400, y: gameTimeY, width: stepperLabelW, height: commonH)
+//        gameTimeIndicatorLabel.frame = CGRect(x: 400, y: gameTimeY, width: stepperLabelW, height: commonH)
         gameTimeIndicatorLabel.text = String(Int(gameTimeStepper.value))
 
-        saveButton()
+        saveBtn()
 
 //        startBtn.titleLabel?.text = "Start"
         view.addSubview(maxBubbleNumLabel)
@@ -85,14 +96,68 @@ class BPSettingsViewController: UIViewController {
         view.addSubview(gameTimeLabel)
         view.addSubview(gameTimeStepper)
         view.addSubview(gameTimeIndicatorLabel)
+        
+        
+        settingsLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(view)
+            make.top.equalTo(view).offset(50)
+        }
+        maxBubbleNumLabel.snp.makeConstraints { (e) in
+            e.left.equalTo(view).offset(30)
+            e.top.equalTo(settingsLabel.snp_bottomMargin).offset(80)
+        }
+        maxBubbleNumIndicatorLabel.snp.makeConstraints { (e) in
+            e.left.equalTo(maxBubbleNumLabel.snp_rightMargin).offset(15)
+            e.top.equalTo(maxBubbleNumLabel)
+        }
+        maxBubbleNumStepper.snp.makeConstraints { (e) in
+            e.centerY.equalTo(maxBubbleNumLabel)
+            e.right.equalTo(view).offset(-30)
+        }
+        gameTimeLabel.snp.makeConstraints { (e) in
+            e.left.equalTo(maxBubbleNumLabel)
+            e.top.equalTo(maxBubbleNumLabel.snp_bottomMargin).offset(40)
+        }
+        gameTimeIndicatorLabel.snp.makeConstraints { (e) in
+            e.top.equalTo(gameTimeLabel)
+            e.left.equalTo(maxBubbleNumIndicatorLabel)
+        }
+        gameTimeStepper.snp.makeConstraints { (e) in
+            e.top.equalTo(gameTimeLabel)
+            e.right.equalTo(view).offset(-30)
+        }
+        
+        let width = UIScreen.main.bounds.width
+        let height = UIScreen.main.bounds.height
+        if width < height {
+            saveButton.snp.makeConstraints { (e) in
+                e.bottom.equalTo(view).offset(-100)
+                e.centerX.equalTo(view)
+                e.width.equalTo(100)
+            }
+        } else {
+            saveButton.snp.makeConstraints { (e) in
+                e.bottom.equalTo(view).offset(-50)
+                e.centerX.equalTo(view)
+                e.width.equalTo(100)
+            }
+        }
+        
     }
 
-    func saveButton() {
-        let backButton = UIButton(type: .system)
-        backButton.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 300, width: 80, height: 50)
-        backButton.setTitle("Save", for: .normal)
-        backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
-        view.addSubview(backButton)
+    func saveBtn() {
+        saveButton.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 300, width: 80, height: 50)
+        let font = UIFont.systemFont(ofSize: 30)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.black
+        ]
+        saveButton.layer.borderColor = UIColor.gray.cgColor
+        saveButton.layer.borderWidth = 1
+        saveButton.layer.cornerRadius = 5
+        saveButton.setAttributedTitle(NSAttributedString(string: "Save", attributes: attributes), for: .normal)
+        saveButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
+        view.addSubview(saveButton)
     }
 
     @objc
@@ -161,4 +226,16 @@ class BPSettingsViewController: UIViewController {
     }
     */
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        let width = size.width
+        let height = size.height
+        
+        if width > height {
+            saveButton.snp.removeConstraints()
+            saveButton.snp.makeConstraints { (make) in
+                make.centerX.equalTo(view)
+                make.bottom.equalTo(view).offset(-50)
+            }
+        }
+    }
 }

@@ -34,8 +34,11 @@ class GameScene: SKScene {
     private var timeLeftLabel = SKLabelNode()
     private let timeLeftValueLabel = SKLabelNode()
 
-    private let titleLabelY = CGFloat(200)
-    private let valueLabelY = CGFloat(250)
+    private var titleLabelY = CGFloat(400)
+    private var valueLabelY = CGFloat(250)
+    private var maxX = CGFloat(667)
+    private let titleFontSize = CGFloat(25)
+    private let titleFontName = "MarkerFelt-Wide"
 
     init(size: CGSize, highScore: Int, gameTime: Int, maxBubbleNum: Int, gameOverHandler: @escaping (Int) -> Void) {
         self.highScore =  highScore
@@ -51,6 +54,10 @@ class GameScene: SKScene {
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        guard let scene = scene else { fatalError() }
+        titleLabelY = scene.frame.maxY - 40
+        valueLabelY = titleLabelY - 40
+        maxX = scene.frame.maxX
         self.removeAllChildren()
         spawnBubbles()
 
@@ -63,41 +70,40 @@ class GameScene: SKScene {
         timeLeftValueLbl()
 
         fireGameTimer()
-//        scene?.view?.addSubview(LoginViewStevia())
-        // TODO: remove
-        //let name = UserDefaults.standard.string(forKey: "samplePlayer") ?? ""
-//        for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
-//            print("\(key) = \(value) \n")
-//        }
-//
-//        for ()
     }
 
 
     func highestScoreLbl() {
-        highestScoreLabel.position = CGPoint(x: 60, y: 300)
-        highestScoreLabel.text = "HIGHEST SCORE: " + String(highScore)
+        highestScoreLabel.position = CGPoint(x: maxX - 30, y: titleLabelY)
+        highestScoreLabel.text = "HIGHEST"
         highestScoreLabel.fontColor = .black
+        highestScoreLabel.horizontalAlignmentMode = .right
+        highestScoreLabel.fontSize = titleFontSize - 3
+        highestScoreLabel.fontName = titleFontName
         self.addChild(highestScoreLabel)
     }
 
     func highestScoreValueLbl() {
-        highestScoreValueLabel.position = CGPoint(x: 60, y: 220)
+        highestScoreValueLabel.position = CGPoint(x: maxX - 75, y: valueLabelY)
+        highestScoreValueLabel.text = String(highScore)
+        highestScoreValueLabel.fontColor = .black
+        highestScoreValueLabel.fontSize = 28
         highestScoreValueLabel.horizontalAlignmentMode = .center
         self.addChild(highestScoreValueLabel)
     }
 
     func timeLeftLbl() {
-        timeLeftLabel.position = CGPoint(x: 0, y: titleLabelY)
+        timeLeftLabel.position = CGPoint(x: 20, y: titleLabelY)
         timeLeftLabel.horizontalAlignmentMode = .left
         timeLeftLabel.text = "Time Left"
-        timeLeftLabel.fontSize = 30
+        timeLeftLabel.fontSize = titleFontSize
+        timeLeftLabel.fontName = titleFontName
         timeLeftLabel.fontColor = .black
         self.addChild(timeLeftLabel)
     }
 
     func timeLeftValueLbl() {
-        timeLeftValueLabel.position = CGPoint(x: 30, y: 0)
+        timeLeftValueLabel.position = CGPoint(x: 80, y: valueLabelY)
         timeLeftValueLabel.horizontalAlignmentMode = .center
         timeLeftValueLabel.text = String(timeLeft)
         timeLeftValueLabel.fontSize = 28
@@ -106,22 +112,22 @@ class GameScene: SKScene {
     }
 
     func scoreLbl() {
-
+        scoreLabel.position = CGPoint(x: maxX / 2, y: titleLabelY)
+        scoreLabel.horizontalAlignmentMode = .center
+        scoreLabel.text = "Score"
+        scoreLabel.fontName = titleFontName
+        scoreLabel.fontColor = .black
+        scoreLabel.fontSize = titleFontSize
+        self.addChild(scoreLabel)
     }
 
     func scoreValueLbl() {
-        scoreValueLabel = SKLabelNode(text: String(self.score))
+        scoreValueLabel.position = CGPoint(x: maxX / 2, y: valueLabelY)
+        scoreValueLabel.text = String(self.score)
         scoreValueLabel.fontSize = 40
         scoreValueLabel.horizontalAlignmentMode = .center
         scoreValueLabel.fontColor = .black
-        // TODO: score font
-//        scoreLabel?.fontName = .
-        if let sceneWidth = scene?.frame.width {
-            if let sceneHeight = scene?.frame.height {
-                scoreValueLabel.position = CGPoint(x: sceneWidth/2, y: sceneHeight - 50)
-            }
-        }
-//        label?.position = CGPoint(x: scene?.frame.width/2, y: 0)//CGRect(x: 0, y: 0, width: 100, height: 30)
+        scoreValueLabel.fontName = "Avenir-Book"
         self.addChild(scoreValueLabel)
     }
 
@@ -210,6 +216,11 @@ class GameScene: SKScene {
         super.didChangeSize(oldSize)
         self.removeAllChildren()
         scoreLbl()
+        scoreValueLbl()
+        highestScoreLbl()
+        highestScoreValueLbl()
+        timeLeftLbl()
+        timeLeftValueLbl()
     }
 
     func bubbleNode() -> SKShapeNode {
@@ -287,6 +298,7 @@ class GameScene: SKScene {
     }
 
     func gameOver() {
+        self.removeAllChildren()
         self.gameOverHandler(score)
         gameTimer.invalidate()
         bubbleLoop.invalidate()

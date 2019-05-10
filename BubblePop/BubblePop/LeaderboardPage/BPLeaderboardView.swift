@@ -49,7 +49,7 @@ class BPLeaderboardView: UIView {
             .shadow: shadow
         ]
         restartButton.setAttributedTitle(NSAttributedString(string: "Play again", attributes: attributes), for: .normal)
-        restartButton.layer.borderColor = UIColor.black.cgColor
+        restartButton.layer.borderColor = UIColor.gray.cgColor
         restartButton.layer.borderWidth = 1
         restartButton.layer.cornerRadius = 5
         restartButton.addTarget(vc, action: #selector(vc?.restart), for: .touchUpInside)
@@ -62,7 +62,7 @@ class BPLeaderboardView: UIView {
         addSubviews()
         makeConstraints()
         #if DEBUG
-        addBorder()
+//        addBorder()
         #endif
     }
     
@@ -99,7 +99,7 @@ class BPLeaderboardView: UIView {
         }
         backButton.snp.makeConstraints { (make) in
             make.centerX.equalTo(self)
-            make.bottom.equalTo(self).offset(-45)
+            make.bottom.equalTo(self).offset(-35)
         }
 
         if let scoreLabel = yourScoreLabel {
@@ -116,6 +116,7 @@ class BPLeaderboardView: UIView {
             restartButton.snp.makeConstraints { (make) in
                 make.centerX.equalTo(self)
                 make.bottom.equalTo(backButton.snp_topMargin).offset(-15)
+                make.width.equalTo(200)
             }
         } else {
             scoreTableView.snp.makeConstraints { (make) in
