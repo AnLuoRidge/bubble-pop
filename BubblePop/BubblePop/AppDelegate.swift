@@ -25,7 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //                window?.rootViewController = BPSettingsViewController()
 
-        window?.rootViewController = GameViewController()
+//        window?.rootViewController = GameViewController()
+//        window?.rootViewController = BPLeaderboardTableViewController()
+        window?.rootViewController = BPHomeViewController()
+
 //        window?.rootViewController = UINavigationController(rootViewController: BPLeaderboardTableViewController())
         return true
     }

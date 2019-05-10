@@ -8,26 +8,79 @@
 
 import UIKit
 
-class BPLeaderboardTableViewController: UITableViewController {
-//    override func loadView() {
-//        super.loadView()
-//        tableView = UITableView(frame: CGRect.zero, style: .)
-//    }
+class BPLeaderboardTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var scores = [Score]()
+
+    override func loadView() {
+        super.loadView()
+        let tableView = UITableView(frame: CGRect(x: 100, y: 60, width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height - 220))
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.view.addSubview(tableView)
+
+
+
+        let restartButton = UIButton(type: .roundedRect)
+        restartButton.frame = CGRect(x: 100, y: 0, width: 180, height: 50)
+        restartButton.setTitle("Play again", for: .normal)
+//        restartButton.backgroundColor = .blue
+        restartButton.setTitleColor(.black, for: .normal)
+        let font = UIFont.boldSystemFont(ofSize: 28)
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.lightGray
+        shadow.shadowBlurRadius = 5
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: UIColor.black,
+            .shadow: shadow
+        ]
+        restartButton.setAttributedTitle(NSAttributedString(string: "Play again", attributes: attributes), for: .normal)
+        restartButton.layer.borderColor = UIColor.black.cgColor
+        restartButton.layer.borderWidth = 1
+        restartButton.layer.cornerRadius = 5
+        restartButton.addTarget(self, action: #selector(restart), for: .touchUpInside)
+        self.view.addSubview(restartButton)
+
+        let backButton = UIButton(type: .system)
+        backButton.setTitle("< Back", for: .normal)
+        backButton.frame = CGRect(x: 300, y: 0, width: 100, height: 50)
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        view.addSubview(backButton)
+
+        let titleLabel = UILabel()
+        titleLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        titleLabel.backgroundColor = .white
+        titleLabel.text = "Leaderboard"
+        titleLabel.textColor = .green
+        view.addSubview(titleLabel)
+    }
+
+    @objc
+    func restart(sender: UIButton!) {
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+    }
+    @objc
+    func back(sender: UIButton!) {
+        self.present(BPHomeViewController(), animated: true)
+    }
+
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        tableView.frame = CGRect(x: 100, y: 100, width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height - 120)
+//
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "High Scores"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         scores = ScoreDAO.getSortedScores()
 
-//        let titleLable = UILabel()
-//        titleLable.frame = CGRect(x: 0, y: 200, width: UIScreen.main.bounds.width, height: 50)
-//        titleLable.backgroundColor = UIColor.white
-//        titleLable.text = "Leaderboard"
-//        titleLable.textColor = .green
-//        view.addSubview(titleLable)
+//        self.tableView.frame =  CGRect(x: 100, y: 100, width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.height - 120)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -38,18 +91,18 @@ class BPLeaderboardTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return scores.count
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let cell = UITableViewCell.init(style: .value1, reuseIdentifier: "Cell")//.cellForRow(at: indexPath)
         // Configure the cell...

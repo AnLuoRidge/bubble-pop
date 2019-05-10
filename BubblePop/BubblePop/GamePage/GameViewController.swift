@@ -9,11 +9,28 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import os.log
 
 class GameViewController: UIViewController {
-    var maxBubbleNum = 15
-    var gameTime = 10
-    var highScore = 999
+    private var maxBubbleNum = 15
+    private var gameTime = 10
+    private var highScore = 999
+    private let playerName: String
+    private static let randomNames = ["THE MAGICIAN", "THE HERMIT"]
+
+    convenience init() {
+        self.init(playerName: GameViewController.randomNames.randomElement()!)
+    }
+
+    init(playerName name: String) {
+        self.playerName = name
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.playerName = GameViewController.randomNames.randomElement()!
+        super.init(coder: aDecoder)
+    }
 
     override func loadView() {
         super.loadView()
@@ -97,6 +114,11 @@ class GameViewController: UIViewController {
 
     // pass into game view as a block
     func handleGameOver(score: Int) {
-        print("Player: xxxx, GameVC received the gameOver and score is \(score)")
+        #if DEBUG
+        os_log("Player: %@, Score: %@", log: OSLog.default, type: .info, playerName, score)
+        #endif
+
+        ScoreDAO.saveScore(name: playerName, score: score)
+        present(BPLeaderboardTableViewController(), animated: true)
     }
 }

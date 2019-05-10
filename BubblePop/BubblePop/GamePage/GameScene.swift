@@ -21,11 +21,12 @@ class GameScene: SKScene {
     var graphs = [String : GKGraph]()
     var bubbles = [SKShapeNode]()
     var lastColorHash = 0
+    private var gameTimer = Timer()
+    private var bubbleLoop = Timer()
     var gameOverHandler: (Int) -> Void
 //    var timer = Timer()
     
-    private var lastUpdateTime : TimeInterval = 0
-
+    var lastUpdateTime: TimeInterval = 0
     private var scoreLabel = SKLabelNode()
     private var scoreValueLabel = SKLabelNode()
     private let highestScoreLabel = SKLabelNode()
@@ -42,6 +43,7 @@ class GameScene: SKScene {
         self.gameOverHandler = gameOverHandler
 //        print("High Score", highScore)
 //        print("Time", gameTime)
+
         super.init(size: size)
     }
 //
@@ -126,21 +128,17 @@ class GameScene: SKScene {
     }
 
     func fireGameTimer() {
-        let gameTimer = Timer(timeInterval: TimeInterval(exactly: 1)!, repeats: true, block: { timer in
+        gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.timeLeft -= 1
-            print(self.timeLeft)
             self.timeLeftValueLabel.text = String(self.timeLeft)
             if self.timeLeft == 0 {
-                timer.invalidate()
-                self.handleGameOver()
-            }
-        })
+                self.gameOver()
+            }})
         gameTimer.fire()
     }
 
     override func sceneDidLoad() {
 
-        self.lastUpdateTime = 0
 //
 //        // Get label node from scene and store it for use later
 ////        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
@@ -173,7 +171,7 @@ class GameScene: SKScene {
         let timeInterval = TimeInterval(exactly: 0.1)
 
         // Setup a timer to run randomly between every 0.5 to 1.2 seconds
-        let timer = Timer.scheduledTimer(withTimeInterval: timeInterval!, repeats: true, block: { _ in
+        bubbleLoop = Timer.scheduledTimer(withTimeInterval: timeInterval!, repeats: true, block: { _ in
             // limit bubble num. -1 for offset
             if self.children.count > Int.random(in: 0...self.maxBubbles) {
                 return
@@ -207,7 +205,7 @@ class GameScene: SKScene {
             self.blowBubble(bubble: bubble)
 //            self.label?.text = NSCoder.string(for: self.children[self.children.endIndex - 1].position)
         })
-        timer.fire()
+        bubbleLoop.fire()
     }
 
     override func didChangeSize(_ oldSize: CGSize) {
@@ -288,6 +286,17 @@ class GameScene: SKScene {
 //            self.handleGameOver(status: self.isGameOver())
         }
 
+    }
+
+    func gameOver() {
+        self.gameOverHandler(score)
+        gameTimer.invalidate()
+        bubbleLoop.invalidate()
+    }
+
+    deinit {
+        gameTimer.invalidate()
+        bubbleLoop.invalidate()
     }
 
     func touchDown(atPoint pos : CGPoint) {

@@ -77,6 +77,7 @@ class BPSettingsViewController: UIViewController {
         gameTimeIndicatorLabel.frame = CGRect(x: 400, y: gameTimeY, width: stepperLabelW, height: commonH)
         gameTimeIndicatorLabel.text = String(Int(gameTimeStepper.value))
 
+        saveButton()
 
 //        startBtn.titleLabel?.text = "Start"
         view.addSubview(maxBubbleNumLabel)
@@ -85,10 +86,24 @@ class BPSettingsViewController: UIViewController {
         view.addSubview(gameTimeLabel)
         view.addSubview(gameTimeStepper)
         view.addSubview(gameTimeIndicatorLabel)
-        self.view = LoginViewStevia()
+//        self.view = LoginViewStevia()
     }
 
-    func addConstriants() {
+    func saveButton() {
+        let backButton = UIButton(type: .system)
+        backButton.frame = CGRect(x: 0, y: 300, width: 80, height: 50)
+        backButton.setTitle("Back", for: .normal)
+        backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
+        view.addSubview(backButton)
+    }
+
+    @objc
+    func backToHome() {
+        saveSettings()
+        dismiss(animated: false)
+    }
+
+    func addConstraints() {
 
 }
 
@@ -119,10 +134,10 @@ class BPSettingsViewController: UIViewController {
 //        gameTimeIndicatorLabel.text = String(gameTime)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        saveSettings()
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        saveSettings()
+//    }
 
     @objc
     func maxBubbleNumStepperValueChanged(sender: UIStepper!) {

@@ -21,7 +21,7 @@ class ScoreDAO {
                 UserDefaults.standard.set(scores, forKey: "scores")
             }
         } else {
-            os_log("Failed to save scores", log: OSLog.default, type: .error)
+            os_log("%@：Failed to save scores.", log: OSLog.default, type: .error, #function)
         }
     }
 

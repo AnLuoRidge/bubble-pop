@@ -25,7 +25,6 @@ class LoginViewStevia: UIView {
                 password,
                 login
         )
-
         // Vertical + Horizontal Layout in one pass
         // With type-safe visual format
         layout(

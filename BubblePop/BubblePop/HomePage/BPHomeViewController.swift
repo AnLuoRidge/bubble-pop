@@ -20,29 +20,55 @@ class BPHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let startBtn = UIButton()
-                startBtn.titleLabel?.text = "Start"
-                view.addSubview(startBtn)
-        
-        
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0, y: 400, width: UIScreen.main.bounds.width, height: 50)
-        button.backgroundColor = UIColor.white
-        button.setTitle("Start", for: .normal)
-        button.setTitleColor(UIColor.gray, for: .normal)
-        view.addSubview(button)
-//        button.addTarget(self, action: Selector(buttonClick()), for: .touchUpInside)
-        button.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
+//        let startBtn = UIButton()
+//                startBtn.titleLabel?.text = "Start"
+//                view.addSubview(startBtn)
+
 
         
-        
+        let startButton = UIButton(type: .custom)
+        startButton.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
+        startButton.backgroundColor = .white
+        startButton.setTitle("Start", for: .normal)
+        startButton.setTitleColor(UIColor.gray, for: .normal)
+        view.addSubview(startButton)
+//        button.addTarget(self, action: Selector(buttonClick()), for: .touchUpInside)
+        startButton.addTarget(self, action: #selector(start), for: .touchUpInside)
+
+        let settingsButton = UIButton(type: .system)
+        settingsButton.frame = CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 50)
+        settingsButton.setTitle("Settings", for: .normal)
+        settingsButton.addTarget(self, action: #selector(toSettings), for: .touchUpInside)
+        view.addSubview(settingsButton)
+
+
         // Do any additional setup after loading the view.
         
     }
     @objc
-    func buttonClick() {
+    func start() {
 //        navigationController?.pushViewController(GameViewController(), animated: true)
-         present(GameViewController(), animated: true, completion: nil)
+        let alert = UIAlertController(title: "Your Name", message: "Feel free to skip~", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        alert.addTextField(configurationHandler: { textField in
+            textField.placeholder = "Input your name here..."
+        })
+
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+            if let name = alert.textFields?.first?.text {
+                self.present(GameViewController(playerName: name), animated: true)
+            } else {
+                self.present(GameViewController(), animated: true)
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+
+    }
+    @objc
+    func toSettings() {
+        present(BPSettingsViewController(), animated: false)
     }
 
     /*
