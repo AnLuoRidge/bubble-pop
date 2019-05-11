@@ -17,10 +17,6 @@ class BPHomeViewController: UIViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .white
-        //        let startBtn = UIButton()
-        //                startBtn.titleLabel?.text = "Start"
-        //                view.addSubview(startBtn)
-        
         let titleLabelFont = UIFont.boldSystemFont(ofSize: 45)
         let titleLabelAttributes: [NSAttributedString.Key: Any] = [
             .font: titleLabelFont,
@@ -34,8 +30,6 @@ class BPHomeViewController: UIViewController {
         startButton.layer.borderColor = UIColor.gray.cgColor
         startButton.layer.borderWidth = 1
         startButton.layer.cornerRadius = 5
-        //        startButton.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
-        //        startButton.backgroundColor = .white
         startButton.setTitleColor(.black, for: .normal)
         let font = UIFont.boldSystemFont(ofSize: 35)
         let attributes: [NSAttributedString.Key: Any] = [
@@ -45,8 +39,6 @@ class BPHomeViewController: UIViewController {
         startButton.setAttributedTitle(NSAttributedString(string: "Start", attributes: attributes), for: .normal)
         view.addSubview(startButton)
         startButton.addTarget(self, action: #selector(start), for: .touchUpInside)
-        
-        //        settingsButton.frame = CGRect(x: 0, y: 300, width: UIScreen.main.bounds.width, height: 50)
         settingsButton.setTitle("Settings", for: .normal)
         settingsButton.addTarget(self, action: #selector(toSettings), for: .touchUpInside)
         view.addSubview(settingsButton)
@@ -70,13 +62,8 @@ class BPHomeViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+        super.viewWillTransition(to: size, with: coordinator)
         let width = size.width
         let height = size.height
         
@@ -91,7 +78,6 @@ class BPHomeViewController: UIViewController {
     
     @objc
     func start() {
-//        navigationController?.pushViewController(GameViewController(), animated: true)
         let alert = UIAlertController(title: "Your Name", message: "To be anonymous just leaving it blank", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -110,19 +96,9 @@ class BPHomeViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
 
     }
+    
     @objc
     func toSettings() {
         present(BPSettingsViewController(), animated: false)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

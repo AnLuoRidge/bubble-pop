@@ -86,12 +86,6 @@ class GameViewController: UIViewController {
         (self.view as? SKView)?.scene?.size = size
     }
 
-//
-//    override func willAnimateRotation(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-//        super.willAnimateRotation(to: toInterfaceOrientation, duration: duration)
-//        loadView()
-//    }
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
@@ -104,10 +98,10 @@ class GameViewController: UIViewController {
         return true
     }
 
-    // pass into game view as a block
+    // will pass into game view as a block
     func handleGameOver(score: Int) {
         #if DEBUG
-        os_log("Player: %@, Score: %@", log: OSLog.default, type: .info, playerName, String(score))
+        os_log("GAME OVER\nPlayer: %@, Score: %@", log: OSLog.default, type: .info, playerName, String(score))
         #endif
         ScoreDAO.saveScore(name: playerName, score: score)
         present(BPLeaderboardTableViewController(yourScore: score), animated: true)

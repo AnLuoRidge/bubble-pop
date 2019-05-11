@@ -24,7 +24,6 @@ class GameScene: SKScene {
     private var gameTimer = Timer()
     private var bubbleLoop = Timer()
     var gameOverHandler: (Int) -> Void
-//    var timer = Timer()
     
     var lastUpdateTime: TimeInterval = 0
     private var scoreLabel = SKLabelNode()
@@ -54,25 +53,18 @@ class GameScene: SKScene {
 
     override func didMove(to view: SKView) {
         super.didMove(to: view)
+        self.removeAllChildren()
+        addChilds()
+        spawnBubbles()
+        fireGameTimer()
+    }
+    
+    func calculateLayoutConstants() {
         guard let scene = scene else { fatalError() }
         titleLabelY = scene.frame.maxY - 40
         valueLabelY = titleLabelY - 40
         maxX = scene.frame.maxX
-        
-        self.removeAllChildren()
-        spawnBubbles()
-
-        // TODO: copy to didSizeChange
-        scoreLbl()
-        scoreValueLbl()
-        highestScoreLbl()
-        highestScoreValueLbl()
-        timeLeftLbl()
-        timeLeftValueLbl()
-
-        fireGameTimer()
     }
-
 
     func highestScoreLbl() {
         highestScoreLabel.position = CGPoint(x: maxX - 30, y: titleLabelY)
@@ -142,36 +134,6 @@ class GameScene: SKScene {
         gameTimer.fire()
     }
 
-    override func sceneDidLoad() {
-
-//
-//        // Get label node from scene and store it for use later
-////        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-////        if let label = self.label {
-////            label.alpha = 0.0
-////            label.run(SKAction.fadeIn(withDuration: 2.0))
-////        }
-//
-//        // Create shape node to use during mouse interaction
-//        let w = (self.size.width + self.size.height) * 0.05
-////        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-//        self.spinnyNode = SKShapeNode.init(circleOfRadius: 40)
-//
-//        if let spinnyNode = self.spinnyNode {
-//            spinnyNode.lineWidth = 0
-////            spinnyNode.strokeColor = .clear
-//
-////            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-////            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-////                                              SKAction.fadeOut(withDuration: 0.5),
-////                                              ]))
-//            spinnyNode.position = CGPoint(x: 50, y: 50)
-//            spinnyNode.fillColor = .orange
-//            self.addChild(spinnyNode)
-//        }
-
-    }
-    
     func spawnBubbles() {
         let timeInterval = TimeInterval(exactly: 0.1)
 
@@ -198,15 +160,24 @@ class GameScene: SKScene {
         bubbleLoop.fire()
     }
 
-    override func didChangeSize(_ oldSize: CGSize) {
-        super.didChangeSize(oldSize)
-        self.removeAllChildren()
+    func addChilds() {
+        calculateLayoutConstants()
         scoreLbl()
         scoreValueLbl()
         highestScoreLbl()
         highestScoreValueLbl()
         timeLeftLbl()
         timeLeftValueLbl()
+    }
+    
+    override func didChangeSize(_ oldSize: CGSize) {
+        super.didChangeSize(oldSize)
+        self.removeAllChildren()
+        addChilds()
+        #if DEBUG
+        print("[rotation] \nThe game scene frame: \(scene!.frame)",
+            "\nThe frame of the score lable: \(scoreLabel.frame)\nREPORTER: \(#function)\n")
+        #endif
     }
 
     func bubbleNode() -> SKShapeNode {
@@ -220,12 +191,10 @@ class GameScene: SKScene {
         let marginRight = scene.frame.maxX - bubbleRadius
         let x = CGFloat.random(in: marginLeft...marginRight)
 
-//        let marginTop = scene.frame.maxY - bubbleRadius
-//        let marginBottom = scene.frame.minY + bubbleRadius
-        let y = CGFloat(0) //CGFloat.random(in: marginBottom...marginTop)
+        let y = CGFloat(0)
 
         let bubblePoint = CGPoint(x: x, y: y)
-        bubble.position = bubblePoint//scene.convertPoint(fromView: bubblePoint)
+        bubble.position = bubblePoint
 
         return bubble
     }
@@ -263,24 +232,15 @@ class GameScene: SKScene {
         let outY = marginTop - GameScene.scoreBarHeight
         let outPoint = CGPoint(x: bubble.position.x, y: outY)
 
-//        let locationInScene = scene!.convertPoint(fromView: destinationPoint)
-
-        let translateAction = SKAction.move(
+        let moveToTopAction = SKAction.move(
                 to: outPoint,
-                duration: 5// TimeInterval(Float.random(in: 10...15))
+                duration: 5
         )
 
         // Remove the bubble when it reaches the top of the screen
-        // Deduct points if bubble reaches top without a tap
-        bubble.run(translateAction) {
+        bubble.run(moveToTopAction) {
             bubble.removeFromParent()
-
-//            self.points -= 1
-//            self.updatePoints(points: self.points)
-
-//            self.handleGameOver(status: self.isGameOver())
         }
-
     }
 
     func gameOver() {
@@ -331,27 +291,6 @@ Black	10	5%
                 return} else {return}
             }
         }
-//        let bubbleFrame = CGRect(x: 50, y: 50, width: 50, height: 50)
-//        if bubbleFrame.contains(pos) {
-//        } else {
-//            print(pos)
-//        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.blue
-//            self.addChild(n)
-//        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.red
-//            self.addChild(n)
-//        }
     }
 
     func handleGameOver() {
@@ -359,41 +298,6 @@ Black	10	5%
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let label = self.label {
-//            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-//        }
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-//    }
-//
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-//    }
-//
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-//    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
-        
-        self.lastUpdateTime = currentTime
     }
 }
