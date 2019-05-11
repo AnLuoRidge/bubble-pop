@@ -142,11 +142,9 @@ class BPSettingsViewController: UIViewController {
                 e.width.equalTo(100)
             }
         }
-        
     }
 
     func saveBtn() {
-        saveButton.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 300, width: 80, height: 50)
         let font = UIFont.systemFont(ofSize: 30)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
@@ -168,17 +166,12 @@ class BPSettingsViewController: UIViewController {
 
     func addConstraints() {
 
-}
+    }
 
-//    func addSubviews
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Settings"
         loadSettings()
-//        view.backgroundColor = .white
-
-        // Do any additional setup after loading the view.
-
     }
 
     func saveSettings() {
@@ -190,41 +183,17 @@ class BPSettingsViewController: UIViewController {
         maxBubbleNum = UserDefaults.standard.integer(forKey: "maxBubbleNum")
         if maxBubbleNum == 0 { maxBubbleNum = 15}
 
-//        maxBubbleNumIndicatorLabel.text = String(maxBubbleNum)
-
         gameTime = UserDefaults.standard.integer(forKey: "gameTime")
         if gameTime == 0 { gameTime = 10 }
-//        gameTimeIndicatorLabel.text = String(gameTime)
     }
 
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        saveSettings()
-//    }
-
-    @objc
-    func maxBubbleNumStepperValueChanged(sender: UIStepper!) {
+    @objc func maxBubbleNumStepperValueChanged(sender: UIStepper!) {
         maxBubbleNum = Int(maxBubbleNumStepper.value)
-//        maxBubbleNumIndicatorLabel.text = String(maxBubbleNum)
     }
-    @objc
-    func gameTimeStepperValueChanged(sender: UIStepper!) {
+    
+    @objc func gameTimeStepperValueChanged(sender: UIStepper!) {
         gameTime = Int(gameTimeStepper.value)
-//        gameTimeIndicatorLabel.text = String(gameTime)
-//        let step = 10.0
-//        let roundedValue = round(sender.value / step) * step
-//        sender.value = roundedValue
-//        sender.setValue(roundedValue, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         let width = size.width

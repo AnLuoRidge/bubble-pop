@@ -41,7 +41,7 @@ class GameScene: SKScene {
 
     init(size: CGSize, highScore: Int, gameTime: Int, maxBubbleNum: Int, gameOverHandler: @escaping (Int) -> Void) {
         self.highScore =  highScore
-        self.timeLeft = gameTime
+        self.timeLeft = gameTime + 1 // TODO: remove 1s by adding 3s counting down
         self.gameOverHandler = gameOverHandler
         self.maxBubbles = maxBubbleNum
         super.init(size: size)
@@ -139,7 +139,7 @@ class GameScene: SKScene {
 
         bubbleLoop = Timer.scheduledTimer(withTimeInterval: timeInterval!, repeats: true, block: { _ in
             // limit bubble num
-            let otherNodes = 6
+            let otherNodes = 5
             if self.children.count > self.maxBubbles + otherNodes {
                 return
             }
@@ -234,7 +234,7 @@ class GameScene: SKScene {
 
         let moveToTopAction = SKAction.move(
                 to: outPoint,
-                duration: 5
+                duration: 3
         )
 
         // Remove the bubble when it reaches the top of the screen

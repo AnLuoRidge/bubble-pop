@@ -11,15 +11,14 @@ import Foundation
 import SnapKit
 
 class BPLeaderboardView: UIView {
-    let titleLabel = UILabel()
+    private let titleLabel = UILabel()
     private var yourScoreLabel: UILabel? = UILabel()
-    let scoreTableView = UITableView()
+    private let scoreTableView = UITableView()
     let restartButton = UIButton(type: .roundedRect)
     let backButton = UIButton(type: .roundedRect)
     
     init(tableViewDelegate: UITableViewDelegate, tableViewDataSource: UITableViewDataSource, score: Int?) {
         super.init(frame: CGRect.zero)
-        let vc = getCurrentViewController()
 
         scoreTableView.delegate = tableViewDelegate
         scoreTableView.dataSource = tableViewDataSource
@@ -48,27 +47,23 @@ class BPLeaderboardView: UIView {
             .foregroundColor: UIColor.black,
             .shadow: shadow
         ]
-                restartButton.setAttributedTitle(NSAttributedString(string: "Home", attributes: attributes), for: .normal)
+        restartButton.setAttributedTitle(NSAttributedString(string: "Home", attributes: attributes), for: .normal)
 //        restartButton.setAttributedTitle(NSAttributedString(string: "Play again", attributes: attributes), for: .normal)
         restartButton.layer.borderColor = UIColor.gray.cgColor
         restartButton.layer.borderWidth = 1
         restartButton.layer.cornerRadius = 5
-        restartButton.addTarget(vc, action: #selector(vc?.restart), for: .touchUpInside)
         
         backButton.setTitle("Home", for: .normal)
-        backButton.addTarget(vc, action: #selector(vc?.back), for: .touchUpInside)
 
-        
-        
         addSubviews()
         makeConstraints()
         #if DEBUG
-//        addBorder()
+        addBorders(for: self.subviews)
         #endif
     }
     
-    func addBorder() {
-        for view in self.subviews {
+    func addBorders(for views: [UIView]) {
+        for view in views {
             view.layer.borderColor = UIColor.red.cgColor
             view.layer.borderWidth = 1
         }
@@ -131,16 +126,5 @@ class BPLeaderboardView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-
-    func getCurrentViewController() -> BPLeaderboardTableViewController? {
-        let res:UIResponder = self as UIResponder
-        while res.next != nil {
-            let nextResponder = res.next
-            if (nextResponder is BPLeaderboardTableViewController) {
-                return nextResponder as? BPLeaderboardTableViewController
-            }
-        }
-        return nil
     }
 }

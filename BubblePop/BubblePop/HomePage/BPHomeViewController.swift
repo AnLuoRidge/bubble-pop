@@ -25,8 +25,6 @@ class BPHomeViewController: UIViewController {
         titleLabel.attributedText = NSAttributedString(string: "Bubble Pop", attributes: titleLabelAttributes)
         view.addSubview(titleLabel)
         
-        
-        
         startButton.layer.borderColor = UIColor.gray.cgColor
         startButton.layer.borderWidth = 1
         startButton.layer.cornerRadius = 5
@@ -78,7 +76,7 @@ class BPHomeViewController: UIViewController {
     
     @objc
     func start() {
-        let alert = UIAlertController(title: "Your Name", message: "To be anonymous just leaving it blank", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Your Name", message: "To be anonymous, just leave it blank 😄", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
