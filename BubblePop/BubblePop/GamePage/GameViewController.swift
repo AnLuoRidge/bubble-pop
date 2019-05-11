@@ -67,7 +67,11 @@ class GameViewController: UIViewController {
         if maxBubbleNum == 0 { maxBubbleNum = 15}
         gameTime = UserDefaults.standard.integer(forKey: "gameTime")
         if gameTime == 0 { gameTime = 10 }
-        highScore = ScoreDAO.getSortedScores()[0].score
+        if ScoreDAO.getSortedScores().count == 0 {
+            highScore = 0
+        } else {
+            highScore = ScoreDAO.getSortedScores()[0].score
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

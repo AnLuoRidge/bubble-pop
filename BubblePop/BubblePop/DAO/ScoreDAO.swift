@@ -22,7 +22,10 @@ class ScoreDAO {
                 UserDefaults.standard.set(scores, forKey: scoresKey)
             }
         } else {
-            os_log("%@：Failed to save scores.", log: OSLog.default, type: .error, #function)
+            // inital DB
+            let scores = [name:score]
+            UserDefaults.standard.set(scores, forKey: scoresKey)
+//            os_log("%@：Failed to save scores.", log: OSLog.default, type: .error, #function)
         }
     }
 
