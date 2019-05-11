@@ -35,11 +35,14 @@ class GameViewController: UIViewController {
     override func loadView() {
         super.loadView()
         let view = SKView(frame: UIScreen.main.bounds)
-//        view.showsNodeCount = true
+        #if DEBUG
+        view.showsNodeCount = true
+        view.showsFPS = true
+        #endif
         initialValues()
         let gameScene = GameScene(size: view.bounds.size, highScore: highScore, gameTime: gameTime, maxBubbleNum: maxBubbleNum, gameOverHandler: handleGameOver)
             // TODO: check the scaleMode
-            gameScene.scaleMode = .fill
+            gameScene.scaleMode = .aspectFill
             gameScene.backgroundColor = .white
 
             view.presentScene(gameScene)
@@ -74,28 +77,13 @@ class GameViewController: UIViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-//        present(BPScoreViewController(), animated: true, completion: nil)
-    }
-
     override var shouldAutorotate: Bool {
         return true
     }
-//
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         (self.view as? SKView)?.scene?.size = size
-//        guard let view = self.view as? SKView else { return }
-//        let scene = view.scene!
-//        let gameScene = scene as! GameScene
-//        gameScene.refresh()
-
-//        if var gameScene = view.scene {
-//            gameScene = gameScene as! GameScene
-//            gameScene.clear()
-//        }
-
-//        gameScene.clear()
     }
 
 //

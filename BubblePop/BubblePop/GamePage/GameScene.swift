@@ -58,6 +58,7 @@ class GameScene: SKScene {
         titleLabelY = scene.frame.maxY - 40
         valueLabelY = titleLabelY - 40
         maxX = scene.frame.maxX
+        
         self.removeAllChildren()
         spawnBubbles()
 
@@ -174,14 +175,15 @@ class GameScene: SKScene {
     func spawnBubbles() {
         let timeInterval = TimeInterval(exactly: 0.1)
 
-        // Setup a timer to run randomly between every 0.5 to 1.2 seconds
         bubbleLoop = Timer.scheduledTimer(withTimeInterval: timeInterval!, repeats: true, block: { _ in
-            // limit bubble num. -1 for offset
-            if self.children.count > Int.random(in: 0...self.maxBubbles) {
+            // limit bubble num
+            let otherNodes = 6
+            if self.children.count > self.maxBubbles + otherNodes {
                 return
             }
-
+            // TODO: separate file - BubbleNode
             let bubble = self.bubbleNode()
+            // Avoid overlap
             for oldBubble in self.children {
                 if oldBubble.intersects(bubble) {
                     return
@@ -189,25 +191,9 @@ class GameScene: SKScene {
             }
 
             bubble.name = "bubble"
-
-            /*
-                    enumerateChildNodes(withName: "bubble") { indicatorNode, _ in
-            bubbleCheck = true
-        }
-        */
             // Add bubble to the current game scene
             self.addChild(bubble)
-//            self.bubbles.append(bubble)
-//            if self.bubbles.count > 20 {
-//                self.bubbles.remove(at: 0)
-//            }
-//            print(self.children.count)
-//            print(self.children[self.children.endIndex - 1])
-
-
-            // Blow bubble to top
             self.blowBubble(bubble: bubble)
-//            self.label?.text = NSCoder.string(for: self.children[self.children.endIndex - 1].position)
         })
         bubbleLoop.fire()
     }

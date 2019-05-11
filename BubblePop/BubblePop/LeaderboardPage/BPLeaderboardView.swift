@@ -48,7 +48,8 @@ class BPLeaderboardView: UIView {
             .foregroundColor: UIColor.black,
             .shadow: shadow
         ]
-        restartButton.setAttributedTitle(NSAttributedString(string: "Play again", attributes: attributes), for: .normal)
+                restartButton.setAttributedTitle(NSAttributedString(string: "Home", attributes: attributes), for: .normal)
+//        restartButton.setAttributedTitle(NSAttributedString(string: "Play again", attributes: attributes), for: .normal)
         restartButton.layer.borderColor = UIColor.gray.cgColor
         restartButton.layer.borderWidth = 1
         restartButton.layer.cornerRadius = 5
